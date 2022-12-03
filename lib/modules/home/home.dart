@@ -22,7 +22,7 @@ class Home_Screen extends StatelessWidget {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.category), label: 'Category'),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.shopping_cart), label: 'Cart'),
+                    icon: Icon(Icons.favorite), label: 'Favorites'),
                 BottomNavigationBarItem(
                     icon: Icon(
                       Icons.settings,

@@ -6,6 +6,7 @@ import 'package:onboarding_screen/models/category_model.dart';
 import 'package:onboarding_screen/models/home_model.dart';
 import 'package:onboarding_screen/modules/login/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/login/bloc/states.dart';
+import 'package:onboarding_screen/shared/style/colors.dart';
 
 class ShopAppLayout extends StatelessWidget {
   const ShopAppLayout({super.key});
@@ -18,8 +19,8 @@ class ShopAppLayout extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(),
           body: ConditionalBuilder(
-            builder: (context) =>
-                productBuilder(cubit.home_model!, cubit.categoryModel!),
+            builder: (context) => productBuilder(
+                cubit.home_model!, cubit.categoryModel!, context),
             condition: cubit.home_model != null && cubit.categoryModel != null,
             fallback: (BuildContext context) =>
                 const Center(child: CircularProgressIndicator()),
@@ -30,7 +31,8 @@ class ShopAppLayout extends StatelessWidget {
     );
   }
 
-  Widget productBuilder(Home_Model model, CategoryModel cateorymodel) =>
+  Widget productBuilder(
+          Home_Model model, CategoryModel cateorymodel, context) =>
       SingleChildScrollView(
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
@@ -111,6 +113,7 @@ class ShopAppLayout extends StatelessWidget {
                   model.data!.products.length,
                   ((index) => buildGridView(
                         model.data!.products[index],
+                        context,
                       )),
                 ),
               ),
@@ -118,7 +121,7 @@ class ShopAppLayout extends StatelessWidget {
           ],
         ),
       );
-  Widget buildGridView(ProductData model) => Padding(
+  Widget buildGridView(ProductData model, context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Container(
           decoration: const BoxDecoration(color: Colors.white),
@@ -172,7 +175,7 @@ class ShopAppLayout extends StatelessWidget {
                   const SizedBox(
                     width: 3.0,
                   ),
-                  if (model.discount !=0)
+                  if (model.discount != 0)
                     Text(
                       '${model.old_price}',
                       style: const TextStyle(
@@ -181,12 +184,22 @@ class ShopAppLayout extends StatelessWidget {
                       ),
                     ),
                   const Spacer(),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite_border_sharp,
-                      size: 18,
+                  CircleAvatar(
+                    backgroundColor:
+                        ShopLoginCubit.get(context).favoriteMap[model.id]!
+                            ? defaultColor
+                            : Colors.grey,
+                    radius: 16.0,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        ShopLoginCubit.get(context).changeFavorite(model.id!);
+                      },
+                      icon: const Icon(
+                        Icons.favorite_border_sharp,
+                        color: Colors.white,
+                        size: 18,
+                      ),
                     ),
                   ),
                 ],

@@ -24,6 +24,18 @@ class ShopAppThemeStates extends ShopLoginStates {}
 
 class ShopChangePasswordStates extends ShopLoginStates {}
 
+class ShopPostFavoriteSuccessState extends ShopLoginStates {}
+
+class ShopGetFavoriteSuccessState extends ShopLoginStates {}
+
+class ShopGetLoadingFavoriteSuccessState extends ShopLoginStates {}
+
+class ShopGetFavoriteErrorState extends ShopLoginStates {}
+
+class ShopPostFavoriteErrorState extends ShopLoginStates {}
+
+class ShopLoagingFavoriteSuccessState extends ShopLoginStates {}
+
 class ShopGetDataHomeSuccessState extends ShopLoginStates {}
 
 class ShopGetDataCategorySuccessState extends ShopLoginStates {}
