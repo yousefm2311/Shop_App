@@ -1,3 +1,4 @@
+import 'package:onboarding_screen/models/favorite_model.dart';
 import 'package:onboarding_screen/models/login_model.dart';
 import 'package:onboarding_screen/shared/states/states.dart';
 
@@ -24,7 +25,11 @@ class ShopAppThemeStates extends ShopLoginStates {}
 
 class ShopChangePasswordStates extends ShopLoginStates {}
 
-class ShopPostFavoriteSuccessState extends ShopLoginStates {}
+class ShopPostFavoriteSuccessState extends ShopLoginStates {
+  final FavoritePostModel favoritePostModel;
+
+  ShopPostFavoriteSuccessState(this.favoritePostModel);
+}
 
 class ShopGetFavoriteSuccessState extends ShopLoginStates {}
 

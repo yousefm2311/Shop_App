@@ -131,11 +131,18 @@ class Favorite_Screen extends StatelessWidget {
                               ShopLoginCubit.get(context)
                                   .changeFavorite(model.product!.id!);
                             },
-                            icon: const Icon(
-                              Icons.favorite_border_sharp,
-                              color: Colors.white,
-                              size: 18,
-                            ),
+                            icon: !ShopLoginCubit.get(context)
+                                    .favoriteMap[model.product!.id]!
+                                ? const Icon(
+                                    Icons.favorite_border_sharp,
+                                    color: Colors.white,
+                                    size: 18,
+                                  )
+                                : const Icon(
+                                    Icons.favorite,
+                                    size: 18.0,
+                                    color: Colors.white,
+                                  ),
                           ),
                         ),
                       ],

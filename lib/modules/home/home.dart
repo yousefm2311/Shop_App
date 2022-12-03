@@ -17,8 +17,7 @@ class Home_Screen extends StatelessWidget {
               type: BottomNavigationBarType.fixed,
               items: const [
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.production_quantity_limits_sharp),
-                    label: 'Product'),
+                    icon: Icon(Icons.home_rounded), label: 'Home'),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.category), label: 'Category'),
                 BottomNavigationBarItem(

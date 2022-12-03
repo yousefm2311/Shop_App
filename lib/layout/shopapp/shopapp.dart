@@ -6,6 +6,7 @@ import 'package:onboarding_screen/models/category_model.dart';
 import 'package:onboarding_screen/models/home_model.dart';
 import 'package:onboarding_screen/modules/login/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/login/bloc/states.dart';
+import 'package:onboarding_screen/shared/component/component.dart';
 import 'package:onboarding_screen/shared/style/colors.dart';
 
 class ShopAppLayout extends StatelessWidget {
@@ -27,7 +28,15 @@ class ShopAppLayout extends StatelessWidget {
           ),
         );
       }),
-      listener: ((context, state) {}),
+      listener: ((context, state) {
+        if (state is ShopPostFavoriteSuccessState) {
+          if (!state.favoritePostModel.status!) {
+            defaultToast(
+                text: state.favoritePostModel.message!,
+                color: ToastColor.WANING);
+          }
+        }
+      }),
     );
   }
 
@@ -195,11 +204,14 @@ class ShopAppLayout extends StatelessWidget {
                       onPressed: () {
                         ShopLoginCubit.get(context).changeFavorite(model.id!);
                       },
-                      icon: const Icon(
-                        Icons.favorite_border_sharp,
-                        color: Colors.white,
-                        size: 18,
-                      ),
+                      icon: !ShopLoginCubit.get(context).favoriteMap[model.id]!
+                          ? Icon(
+                              Icons.favorite_border_sharp,
+                              color: Colors.white,
+                              size: 18,
+                            )
+                          : Icon(Icons.favorite,
+                              size: 18.0, color: Colors.white),
                     ),
                   ),
                 ],

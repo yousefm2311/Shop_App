@@ -101,12 +101,12 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
     }).then((value) {
       favoritePostModel = FavoritePostModel.fromJson(value.data);
       print(value.data);
-      if (!favoriteModel!.status!) {
+      if (!favoritePostModel!.status!) {
         favoriteMap[productId] = !favoriteMap[productId]!;
       } else {
         favoriteData();
       }
-      emit(ShopPostFavoriteSuccessState());
+      emit(ShopPostFavoriteSuccessState(favoritePostModel!));
     }).catchError((error) {
       favoriteMap[productId] = !favoriteMap[productId]!;
       emit(ShopPostFavoriteErrorState());
