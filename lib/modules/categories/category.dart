@@ -1,8 +1,6 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_screen/models/category_model.dart';
 import 'package:onboarding_screen/modules/login/bloc/cubit.dart';

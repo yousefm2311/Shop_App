@@ -44,7 +44,7 @@ Widget defaultFormField({
           hintStyle: Theme.of(context).textTheme.subtitle1,
           floatingLabelStyle: Theme.of(context).textTheme.subtitle1,
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey, width: 2),
+            borderSide: const BorderSide(color: Colors.grey, width: 2),
             borderRadius: BorderRadius.circular(20.0),
           ),
           focusedBorder: OutlineInputBorder(
@@ -76,6 +76,7 @@ Future<bool?> defaultToast({
         textColor: Colors.white,
         fontSize: 14.0);
 
+// ignore: constant_identifier_names
 enum ToastColor { SUCCESS, ERROR, WANING }
 
 Color chooseColor(ToastColor state) {

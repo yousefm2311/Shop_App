@@ -7,6 +7,7 @@ import 'package:onboarding_screen/modules/home/home.dart';
 import 'package:onboarding_screen/modules/login/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/login/bloc/states.dart';
 import 'package:onboarding_screen/modules/register/register.dart';
+import 'package:onboarding_screen/shared/component/constants.dart';
 import 'package:onboarding_screen/shared/network/local/cache_helper.dart';
 import '../../shared/component/component.dart';
 
@@ -169,6 +170,7 @@ class Login_Screen extends StatelessWidget {
             Cache_Helper.saveData(
                     key: 'token', value: state.login_model.data!.token)
                 .then((value) {
+                  token = state.login_model.data!.token;
               defaultNavigator(context, const Home_Screen());
             });
             defaultToast(

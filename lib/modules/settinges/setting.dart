@@ -1,6 +1,6 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:onboarding_screen/modules/login/login.dart';
 import 'package:onboarding_screen/shared/component/component.dart';
 import 'package:onboarding_screen/shared/network/local/cache_helper.dart';
@@ -21,7 +21,7 @@ class Settings_Screen extends StatelessWidget {
               }
             });
           },
-          child: Text(
+          child: const Text(
             'Logout',
             style: TextStyle(fontSize: 22.0),
           ),

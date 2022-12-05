@@ -1,3 +1,4 @@
+
 import 'package:onboarding_screen/models/register_model.dart';
 
 abstract class RegisterState {}

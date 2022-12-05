@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:dio/dio.dart';
 
 class Dio_Helper {

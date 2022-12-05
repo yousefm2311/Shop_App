@@ -1,6 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:onboarding_screen/models/favorite_model.dart';
 import 'package:onboarding_screen/models/login_model.dart';
-import 'package:onboarding_screen/shared/states/states.dart';
 
 abstract class ShopLoginStates {}
 

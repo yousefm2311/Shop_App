@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -205,12 +207,12 @@ class ShopAppLayout extends StatelessWidget {
                         ShopLoginCubit.get(context).changeFavorite(model.id!);
                       },
                       icon: !ShopLoginCubit.get(context).favoriteMap[model.id]!
-                          ? Icon(
+                          ? const Icon(
                               Icons.favorite_border_sharp,
                               color: Colors.white,
                               size: 18,
                             )
-                          : Icon(Icons.favorite,
+                          : const Icon(Icons.favorite,
                               size: 18.0, color: Colors.white),
                     ),
                   ),
@@ -234,7 +236,7 @@ class ShopAppLayout extends StatelessWidget {
             width: 100,
             child: Text('${categoryDataList.name}',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 11)),
+                style: const TextStyle(color: Colors.white, fontSize: 11)),
           ),
         ],
       );

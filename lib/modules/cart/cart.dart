@@ -1,6 +1,7 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 
 class Cart_Screen extends StatelessWidget {
   const Cart_Screen({super.key});
@@ -9,7 +10,7 @@ class Cart_Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
+      body: const Center(
         child: Text('Cart',style:TextStyle(fontSize: 22.0)),
       ),
     );

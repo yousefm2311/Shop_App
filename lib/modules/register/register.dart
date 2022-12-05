@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, must_be_immutable
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import 'package:onboarding_screen/modules/login/login.dart';
 import 'package:onboarding_screen/modules/register/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/register/bloc/states.dart';
 import 'package:onboarding_screen/shared/component/component.dart';
+
 
 class Register_Screen extends StatelessWidget {
   Register_Screen({super.key});

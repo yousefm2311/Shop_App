@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_screen/modules/home/home.dart';
 import 'package:onboarding_screen/modules/login/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/login/bloc/states.dart';
-import 'package:onboarding_screen/modules/login/login.dart';
 import 'package:onboarding_screen/modules/onboarding/onboarding.dart';
 import 'package:onboarding_screen/modules/register/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/register/register.dart';
@@ -23,12 +22,12 @@ void main() async {
   token = Cache_Helper.getData(key: 'token');
   if (onboadring != null) {
     if (token != null) {
-      widget = Home_Screen();
+      widget = const Home_Screen();
     } else {
       widget = Register_Screen();
     }
   } else {
-    widget = OnBoarding_Screen();
+    widget = const OnBoarding_Screen();
   }
   runApp(MyApp(
     widget: widget,
@@ -36,7 +35,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key, required this.widget});
+  const MyApp({super.key, required this.widget});
   // This widget is the root of your application.
 
   final Widget widget;

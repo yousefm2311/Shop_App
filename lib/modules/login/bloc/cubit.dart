@@ -1,7 +1,8 @@
+// ignore_for_file: non_constant_identifier_names, avoid_function_literals_in_foreach_calls
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_screen/models/favorite_model.dart';
-import 'package:onboarding_screen/modules/cart/cart.dart';
 import 'package:onboarding_screen/modules/categories/category.dart';
 import 'package:onboarding_screen/modules/favorite/favorite.dart';
 import 'package:onboarding_screen/modules/settinges/setting.dart';
@@ -59,7 +60,6 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
       login_model = Login_Model.fromJson(value.data);
       emit(ShopPostSuccessStates(login_model!));
     }).catchError((error) {
-      print(error.toString());
       emit(ShopPostErrorStates(error.toString()));
     });
   }
@@ -73,10 +73,8 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
       home_model!.data!.products.forEach((element) {
         favoriteMap.addAll({element.id!: element.in_favorites!});
       });
-      print(favoriteMap);
       emit(ShopGetDataHomeSuccessState());
     }).catchError((error) {
-      print(error.toString());
       emit(ShopGetDataHomeErrorState(error.toString()));
     });
   }
@@ -87,7 +85,6 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
       categoryModel = CategoryModel.formJson(value.data);
       emit(ShopGetDataCategorySuccessState());
     }).catchError((error) {
-      print(error.toString());
       emit(ShopGetDataCategoryErrorState(error.toString()));
     });
   }
@@ -100,7 +97,6 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
       'product_id': productId,
     }).then((value) {
       favoritePostModel = FavoritePostModel.fromJson(value.data);
-      print(value.data);
       if (!favoritePostModel!.status!) {
         favoriteMap[productId] = !favoriteMap[productId]!;
       } else {

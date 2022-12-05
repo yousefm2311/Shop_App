@@ -1,14 +1,11 @@
 // ignore_for_file: camel_case_types, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_screen/modules/login/login.dart';
 import 'package:onboarding_screen/shared/component/component.dart';
-import 'package:onboarding_screen/shared/cubit/cubit.dart';
 import 'package:onboarding_screen/shared/network/local/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../shared/states/states.dart';
 
 class onboardModel {
   final String title;
@@ -57,7 +54,7 @@ class _OnBoarding_ScreenState extends State<OnBoarding_Screen> {
                 onPressed: () {
                   submit();
                 },
-                child: Text('SKIP'))
+                child: const Text('SKIP'))
           ],
         ),
         body: Padding(
@@ -76,7 +73,7 @@ class _OnBoarding_ScreenState extends State<OnBoarding_Screen> {
               ),
               Expanded(
                 child: PageView.builder(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   onPageChanged: (int index) {
                     if (index == onboarding.length - 1) {
                       setState(() {
