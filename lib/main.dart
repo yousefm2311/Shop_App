@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_screen/modules/home/home.dart';
 import 'package:onboarding_screen/modules/login/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/login/bloc/states.dart';
+import 'package:onboarding_screen/modules/login/login.dart';
 import 'package:onboarding_screen/modules/onboarding/onboarding.dart';
 import 'package:onboarding_screen/modules/register/bloc/cubit.dart';
-import 'package:onboarding_screen/modules/register/register.dart';
+import 'package:onboarding_screen/modules/splash_screen/splash_screen.dart';
 import 'package:onboarding_screen/shared/component/constants.dart';
 import 'package:onboarding_screen/shared/network/local/cache_helper.dart';
 import 'package:onboarding_screen/shared/observer/observer.dart';
@@ -17,20 +18,20 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   Dio_Helper.init();
   await Cache_Helper.init();
-  Widget widget;
+
   dynamic onboadring = Cache_Helper.getData(key: 'onBoarding');
   token = Cache_Helper.getData(key: 'token');
   if (onboadring != null) {
     if (token != null) {
-      widget = const Home_Screen();
+      widgett = const Home_Screen();
     } else {
-      widget = Register_Screen();
+      widgett = Login_Screen();
     }
   } else {
-    widget = const OnBoarding_Screen();
+    widgett = const OnBoarding_Screen();
   }
   runApp(MyApp(
-    widget: widget,
+    widget: widgett!,
   ));
 }
 
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => ShopLoginCubit()
             ..homeData()
             ..categoryData()
-            ..favoriteData(),
+            ..favoriteData()..getDataUser(),
         ),
         BlocProvider(create: (BuildContext context) => RegisterCubit()),
       ],
@@ -138,7 +139,7 @@ class MyApp extends StatelessWidget {
             ),
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: widget,
+            home: Splash_Screen(),
           );
         },
         listener: ((context, state) {}),

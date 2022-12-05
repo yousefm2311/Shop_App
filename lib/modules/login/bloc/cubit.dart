@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_screen/models/favorite_model.dart';
+import 'package:onboarding_screen/models/updateuser_model.dart';
 import 'package:onboarding_screen/modules/categories/category.dart';
 import 'package:onboarding_screen/modules/favorite/favorite.dart';
 import 'package:onboarding_screen/modules/settinges/setting.dart';
@@ -40,7 +41,7 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
     emit(ShopChangeBottomNaviStates());
   }
 
-  List<Widget> screens = const [
+  List<Widget> screens = [
     ShopAppLayout(),
     Categories_Screen(),
     Favorite_Screen(),
@@ -117,6 +118,46 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
       emit(ShopGetFavoriteSuccessState());
     }).catchError((error) {
       emit(ShopGetFavoriteErrorState());
+    });
+  }
+
+  Login_Model? userModel;
+  void getDataUser() {
+    emit(ShopLoadingUserData());
+    Dio_Helper.getData(url: PROFILE, token: token).then(
+      (value) {
+        userModel = Login_Model.fromJson(value.data);
+        emit(ShopSuccessUserData());
+      },
+    ).catchError((error) {
+      emit(ShopErrorUserData());
+    });
+  }
+
+  bool isBottom = false;
+  void changeBottom(bool isclick) {
+    isBottom = isclick;
+    emit(ShopChangeBottomSheetStates());
+  }
+
+  UpdateUserModel? updateUserModel;
+  void updateUser({
+    required String name,
+    required String email,
+    required String phone,
+  }) {
+    emit(ShopUserUpdateLoadingState());
+    Dio_Helper.putData(url: UPDATE_PROFILE, token: token, data: {
+      'name': name,
+      'email': email,
+      'phone': phone,
+    }).then((value) {
+      updateUserModel = UpdateUserModel.fromJson(value.data);
+      getDataUser();
+      print(value.data);
+      emit(ShopUserUpdateSuccessState());
+    }).catchError((error) {
+      emit(ShopUserUpdateErrorState());
     });
   }
 }

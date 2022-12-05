@@ -6,3 +6,5 @@ const HOME = 'home';
 const CATEGORY = 'categories';
 const REGISTER = 'register';
 const FAVORITES = 'favorites';
+const PROFILE = 'profile';
+const UPDATE_PROFILE = 'update-profile';

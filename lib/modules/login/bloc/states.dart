@@ -57,3 +57,13 @@ class ShopGetDataHomeErrorState extends ShopLoginStates {
   final String error;
   ShopGetDataHomeErrorState(this.error);
 }
+
+class ShopLoadingUserData extends ShopLoginStates {}
+
+class ShopSuccessUserData extends ShopLoginStates {}
+
+class ShopErrorUserData extends ShopLoginStates {}
+class ShopChangeBottomSheetStates extends ShopLoginStates {}
+class ShopUserUpdateLoadingState extends ShopLoginStates {}
+class ShopUserUpdateSuccessState extends ShopLoginStates {}
+class ShopUserUpdateErrorState extends ShopLoginStates {}

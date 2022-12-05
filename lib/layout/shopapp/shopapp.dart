@@ -10,7 +10,7 @@ import 'package:onboarding_screen/modules/login/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/login/bloc/states.dart';
 import 'package:onboarding_screen/shared/component/component.dart';
 import 'package:onboarding_screen/shared/style/colors.dart';
-
+import 'package:animate_do/animate_do.dart';
 class ShopAppLayout extends StatelessWidget {
   const ShopAppLayout({super.key});
 
@@ -47,89 +47,92 @@ class ShopAppLayout extends StatelessWidget {
       SingleChildScrollView(
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CarouselSlider(
-              items: model.data!.banners
-                  .map(
-                    (e) => Image(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                        '${e.image}',
+        child: FadeInDown(
+          delay: const Duration(milliseconds: 400),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CarouselSlider(
+                items: model.data!.banners
+                    .map(
+                      (e) => Image(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          '${e.image}',
+                        ),
                       ),
-                    ),
-                  )
-                  .toList(),
-              options: CarouselOptions(
-                  height: 200,
-                  initialPage: 0,
-                  enableInfiniteScroll: true,
-                  viewportFraction: 1.0,
-                  reverse: false,
-                  autoPlay: true,
-                  autoPlayAnimationDuration: const Duration(seconds: 1),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  scrollDirection: Axis.horizontal),
-            ),
-            const SizedBox(
-              height: 25.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Categories",
-                    style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black),
-                  ),
-                  Container(
-                    height: 100,
-                    child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) =>
-                            buildCategories(cateorymodel.data!.data[index]),
-                        separatorBuilder: (context, index) => const SizedBox(
-                              width: 5.0,
-                            ),
-                        itemCount: cateorymodel.data!.data.length),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "Product",
-                    style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black),
-                  ),
-                ],
+                    )
+                    .toList(),
+                options: CarouselOptions(
+                    height: 200,
+                    initialPage: 0,
+                    enableInfiniteScroll: true,
+                    viewportFraction: 1.0,
+                    reverse: false,
+                    autoPlay: true,
+                    autoPlayAnimationDuration: const Duration(seconds: 1),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    scrollDirection: Axis.horizontal),
               ),
-            ),
-            Container(
-              color: Colors.white,
-              child: GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                childAspectRatio: 1 / 1.4,
-                children: List.generate(
-                  model.data!.products.length,
-                  ((index) => buildGridView(
-                        model.data!.products[index],
-                        context,
-                      )),
+              const SizedBox(
+                height: 25.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Categories",
+                      style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black),
+                    ),
+                    Container(
+                      height: 100,
+                      child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) =>
+                              buildCategories(cateorymodel.data!.data[index]),
+                          separatorBuilder: (context, index) => const SizedBox(
+                                width: 5.0,
+                              ),
+                          itemCount: cateorymodel.data!.data.length),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      "Product",
+                      style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black),
+                    ),
+                  ],
                 ),
               ),
-            )
-          ],
+              Container(
+                color: Colors.white,
+                child: GridView.count(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  childAspectRatio: 1 / 1.4,
+                  children: List.generate(
+                    model.data!.products.length,
+                    ((index) => buildGridView(
+                          model.data!.products[index],
+                          context,
+                        )),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       );
   Widget buildGridView(ProductData model, context) => Padding(
