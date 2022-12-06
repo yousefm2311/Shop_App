@@ -3,11 +3,14 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onboarding_screen/modules/home/home.dart';
 import 'package:onboarding_screen/modules/login/login.dart';
 import 'package:onboarding_screen/modules/register/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/register/bloc/states.dart';
 import 'package:onboarding_screen/shared/component/component.dart';
+import 'package:onboarding_screen/shared/network/local/cache_helper.dart';
 
+import '../../shared/component/constants.dart';
 
 class Register_Screen extends StatelessWidget {
   Register_Screen({super.key});
@@ -150,9 +153,14 @@ class Register_Screen extends StatelessWidget {
     }), listener: (context, state) {
       if (state is RegisterSuccessState) {
         if (state.registerModel.status!) {
-          defaultToast(
-              text: state.registerModel.message!, color: ToastColor.SUCCESS);
-          defaultNavigatorPush(context, Login_Screen());
+          Cache_Helper.saveData(
+                  key: 'token', value: state.registerModel.data!.token)
+              .then((value) {
+            token = state.registerModel.data!.token;
+            defaultToast(
+                text: state.registerModel.message!, color: ToastColor.SUCCESS);
+            defaultNavigatorPush(context, Home_Screen());
+          });
         } else {
           defaultToast(
               text: state.registerModel.message!, color: ToastColor.ERROR);

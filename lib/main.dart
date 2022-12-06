@@ -139,7 +139,7 @@ class MyApp extends StatelessWidget {
             ),
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: Splash_Screen(),
+            home: const Splash_Screen(),
           );
         },
         listener: ((context, state) {}),

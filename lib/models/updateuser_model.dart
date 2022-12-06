@@ -9,8 +9,6 @@ class UpdateUserModel{
   }
 }
 
-
-
 class UserModelData {
   String? name;
   String? email;

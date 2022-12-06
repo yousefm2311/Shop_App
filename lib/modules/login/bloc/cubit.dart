@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onboarding_screen/models/changepassword_model.dart';
 import 'package:onboarding_screen/models/favorite_model.dart';
+import 'package:onboarding_screen/models/search_model.dart';
 import 'package:onboarding_screen/models/updateuser_model.dart';
 import 'package:onboarding_screen/modules/categories/category.dart';
 import 'package:onboarding_screen/modules/favorite/favorite.dart';
@@ -42,9 +44,9 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
   }
 
   List<Widget> screens = [
-    ShopAppLayout(),
-    Categories_Screen(),
-    Favorite_Screen(),
+    const ShopAppLayout(),
+    const Categories_Screen(),
+    const Favorite_Screen(),
     Settings_Screen(),
   ];
 
@@ -154,10 +156,44 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
     }).then((value) {
       updateUserModel = UpdateUserModel.fromJson(value.data);
       getDataUser();
-      print(value.data);
       emit(ShopUserUpdateSuccessState());
     }).catchError((error) {
       emit(ShopUserUpdateErrorState());
+    });
+  }
+
+
+
+  ChangePasswordModel? changePasswordModel;
+  void changePasswordData(
+      {required String oldPassword, required String newPassword}) {
+    emit(ShopChangePasswordLoadingState());
+    Dio_Helper.postData(url: CHAMGEPASSWORD, token: token, data: {
+      'current_password': oldPassword,
+      'new_password': newPassword
+    }).then((value) {
+      changePasswordModel = ChangePasswordModel.fromJson(value.data);
+      emit(ShopChangePasswordSuccessState(changePasswordModel!));
+      // ignore: argument_type_not_assignable_to_error_handler
+    }).catchError(() {
+      emit(ShopChangePasswordErrorState());
+    });
+  }
+
+  SearchModel? searchModel;
+  void searchData({required String text}) {
+    emit(ShopSearchLoadingSate());
+    Dio_Helper.postData(
+            url: SEARCH,
+            data: {
+              'text': text,
+            },
+            token: token)
+        .then((value) {
+      searchModel = SearchModel.fromJson(value.data);
+      emit(ShopSearchSuccessSate());
+    }).catchError((error) {
+      emit(ShopSearchErrorSate());
     });
   }
 }

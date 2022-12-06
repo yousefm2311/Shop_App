@@ -24,11 +24,13 @@ Widget defaultFormField({
   bool isPassword = false,
   String? Function(String?)? validator,
   VoidCallback? ontap,
+  String? Function(String?)? onchange,
   required BuildContext context,
 }) =>
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: TextFormField(
+        onFieldSubmitted: onchange,
         validator: validator,
         controller: controller,
         obscureText: isPassword,

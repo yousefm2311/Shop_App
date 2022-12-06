@@ -13,11 +13,15 @@ class RegisterData {
   String? name;
   String? phone;
   String? email;
-  String? password;
+  int? id;
+  String? image;
+  String? token;
   RegisterData.fromJson(Map<String, dynamic> json) {
     name = json["name"];
     phone = json["phone"];
     email = json["email"];
-    password = json["password"];
+    id = json["id"];
+    image = json["image"];
+    token = json["token"];
   }
 }

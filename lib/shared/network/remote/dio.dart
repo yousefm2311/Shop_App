@@ -32,7 +32,7 @@ class Dio_Helper {
       String? token,
       required Map<String, dynamic> data,}) async {
         dio!.options.headers = {
-      'lang':lang,
+      'lang':'en',
       'Authorization':token,
       'Content-Type': 'application/json'
     };
@@ -45,7 +45,7 @@ class Dio_Helper {
       String? token,
       required Map<String, dynamic> data,}) async {
         dio!.options.headers = {
-      'lang':lang,
+      'lang':'en',
       'Authorization':token,
       'Content-Type': 'application/json'
     };

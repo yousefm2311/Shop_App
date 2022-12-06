@@ -1,4 +1,3 @@
-
 import 'package:onboarding_screen/models/register_model.dart';
 
 abstract class RegisterState {}
@@ -18,3 +17,7 @@ class RegisterErrorState extends RegisterState {
 
   RegisterErrorState(this.error);
 }
+
+class VerifyEmailLoadingState extends RegisterState {}
+class VerifyEmailSuccessState extends RegisterState {}
+class VerifyEmailErrorState extends RegisterState {}

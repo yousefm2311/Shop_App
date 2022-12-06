@@ -37,6 +37,7 @@ class ProductData {
   dynamic discount;
   String? image;
   String? name;
+  String? description;
   bool? in_favorites;
   bool? in_cart;
   ProductData.fromJson(Map<String, dynamic> json) {
@@ -46,6 +47,7 @@ class ProductData {
     discount = json['discount'];
     image = json['image'];
     name = json['name'];
+    description = json['description'];
     in_favorites = json['in_favorites'];
     in_cart = json['in_cart'];
   }

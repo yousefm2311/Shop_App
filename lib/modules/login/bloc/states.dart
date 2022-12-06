@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:onboarding_screen/models/changepassword_model.dart';
 import 'package:onboarding_screen/models/favorite_model.dart';
 import 'package:onboarding_screen/models/login_model.dart';
 
@@ -63,7 +64,27 @@ class ShopLoadingUserData extends ShopLoginStates {}
 class ShopSuccessUserData extends ShopLoginStates {}
 
 class ShopErrorUserData extends ShopLoginStates {}
+
 class ShopChangeBottomSheetStates extends ShopLoginStates {}
+
 class ShopUserUpdateLoadingState extends ShopLoginStates {}
+
 class ShopUserUpdateSuccessState extends ShopLoginStates {}
+
 class ShopUserUpdateErrorState extends ShopLoginStates {}
+
+class ShopChangePasswordLoadingState extends ShopLoginStates {}
+
+class ShopChangePasswordSuccessState extends ShopLoginStates {
+  final ChangePasswordModel changePasswordModel;
+
+  ShopChangePasswordSuccessState(this.changePasswordModel);
+}
+
+class ShopChangePasswordErrorState extends ShopLoginStates {}
+
+class ShopSearchLoadingSate extends ShopLoginStates {}
+
+class ShopSearchSuccessSate extends ShopLoginStates {}
+
+class ShopSearchErrorSate extends ShopLoginStates {}

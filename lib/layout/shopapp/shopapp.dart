@@ -6,11 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_screen/models/category_model.dart';
 import 'package:onboarding_screen/models/home_model.dart';
+import 'package:onboarding_screen/modules/description_home/description.dart';
 import 'package:onboarding_screen/modules/login/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/login/bloc/states.dart';
+import 'package:onboarding_screen/modules/search/search.dart';
 import 'package:onboarding_screen/shared/component/component.dart';
 import 'package:onboarding_screen/shared/style/colors.dart';
 import 'package:animate_do/animate_do.dart';
+
 class ShopAppLayout extends StatelessWidget {
   const ShopAppLayout({super.key});
 
@@ -20,7 +23,16 @@ class ShopAppLayout extends StatelessWidget {
       builder: ((context, state) {
         ShopLoginCubit cubit = ShopLoginCubit.get(context);
         return Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                onPressed: () {
+                  defaultNavigatorPush(context, Search_Screen());
+                },
+                icon: Icon(Icons.search),
+              ),
+            ],
+          ),
           body: ConditionalBuilder(
             builder: (context) => productBuilder(
                 cubit.home_model!, cubit.categoryModel!, context),
@@ -48,7 +60,7 @@ class ShopAppLayout extends StatelessWidget {
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
         child: FadeInDown(
-          delay: const Duration(milliseconds: 400),
+          delay: const Duration(milliseconds: 200),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -137,91 +149,111 @@ class ShopAppLayout extends StatelessWidget {
       );
   Widget buildGridView(ProductData model, context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Container(
-          decoration: const BoxDecoration(color: Colors.white),
-          width: 150,
-          height: 150,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.bottomStart,
-                children: [
-                  Image(
-                    width: double.infinity,
-                    height: 160,
-                    image: NetworkImage('${model.image}'),
-                  ),
-                  if (model.discount != 0)
-                    Container(
+        child: InkWell(
+          onTap: () {
+            defaultNavigatorPush(
+              context,
+              Description_Screen(
+                name: model.name,
+                productId: model.id,
+                price: model.price,
+                description: model.description,
+                in_favorite: model.in_favorites,
+                image: model.image,
+              ),
+            );
+          },
+          child: Container(
+            decoration: const BoxDecoration(color: Colors.white),
+            width: 150,
+            height: 150,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  alignment: AlignmentDirectional.bottomStart,
+                  children: [
+                    Image(
+                      width: double.infinity,
+                      height: 160,
+                      image: NetworkImage('${model.image}'),
+                    ),
+                    if (model.discount != 0)
+                      Container(
                         padding: const EdgeInsets.all(3.0),
                         color: Colors.red.withOpacity(.8),
                         child: const Text(
                           'DISCOUNT',
-                          style: TextStyle(color: Colors.white, fontSize: 12.0),
-                        )),
-                ],
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Text(
-                '${model.name}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 13.0,
-                  color: Colors.black87,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Row(
-                children: [
-                  Text(
-                    '${model.price} EG',
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: Colors.deepOrange,
-                    ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  '${model.name}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13.0,
+                    color: Colors.black87,
                   ),
-                  const SizedBox(
-                    width: 3.0,
-                  ),
-                  if (model.discount != 0)
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Row(
+                  children: [
                     Text(
-                      '${model.old_price}',
+                      '${model.price} EG',
                       style: const TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        fontSize: 10,
+                        fontSize: 11,
+                        color: Colors.deepOrange,
                       ),
                     ),
-                  const Spacer(),
-                  CircleAvatar(
-                    backgroundColor:
-                        ShopLoginCubit.get(context).favoriteMap[model.id]!
-                            ? defaultColor
-                            : Colors.grey,
-                    radius: 16.0,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        ShopLoginCubit.get(context).changeFavorite(model.id!);
-                      },
-                      icon: !ShopLoginCubit.get(context).favoriteMap[model.id]!
-                          ? const Icon(
-                              Icons.favorite_border_sharp,
-                              color: Colors.white,
-                              size: 18,
-                            )
-                          : const Icon(Icons.favorite,
-                              size: 18.0, color: Colors.white),
+                    const SizedBox(
+                      width: 3.0,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    if (model.discount != 0)
+                      Text(
+                        '${model.old_price}',
+                        style: const TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          fontSize: 10,
+                        ),
+                      ),
+                    const Spacer(),
+                    CircleAvatar(
+                      backgroundColor:
+                          ShopLoginCubit.get(context).favoriteMap[model.id]!
+                              ? defaultColor
+                              : Colors.grey,
+                      radius: 16.0,
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          ShopLoginCubit.get(context).changeFavorite(model.id!);
+                        },
+                        icon:
+                            !ShopLoginCubit.get(context).favoriteMap[model.id]!
+                                ? const Icon(
+                                    Icons.favorite_border_sharp,
+                                    color: Colors.white,
+                                    size: 18,
+                                  )
+                                : const Icon(Icons.favorite,
+                                    size: 18.0, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );
