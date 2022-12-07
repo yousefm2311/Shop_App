@@ -11,3 +11,4 @@ const UPDATE_PROFILE = 'update-profile';
 const CHAMGEPASSWORD = 'change-password';
 const SEARCH = 'products/search';
 const VERIFY = 'verify-email';
+const CARTS = 'carts';

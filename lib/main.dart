@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => ShopLoginCubit()
             ..homeData()
             ..categoryData()
-            ..favoriteData()..getDataUser(),
+            ..favoriteData()..getDataUser()..getDataCart(),
         ),
         BlocProvider(create: (BuildContext context) => RegisterCubit()),
       ],

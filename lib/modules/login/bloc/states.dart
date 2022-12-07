@@ -88,3 +88,17 @@ class ShopSearchLoadingSate extends ShopLoginStates {}
 class ShopSearchSuccessSate extends ShopLoginStates {}
 
 class ShopSearchErrorSate extends ShopLoginStates {}
+
+
+class ChangeCurrenIndexAdd extends ShopLoginStates {}
+class ChangeCurrenIndexRemove extends ShopLoginStates {}
+
+class ShopAddCartLoadingState extends ShopLoginStates {}
+class ShopAddCartSuccessState extends ShopLoginStates {}
+class ShopAddCartErrorState extends ShopLoginStates {}
+
+class ShopGetDataLoadingCart extends ShopLoginStates {}
+class ShopGetDataSuccessCart extends ShopLoginStates {}
+class ShopGetDataErrorCart extends ShopLoginStates {}
+
+class ChangeCartBoolState extends ShopLoginStates {}

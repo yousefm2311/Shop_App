@@ -7,7 +7,7 @@ import 'package:onboarding_screen/modules/login/bloc/states.dart';
 import 'package:onboarding_screen/shared/style/colors.dart';
 
 class Description_Screen extends StatelessWidget {
-  const Description_Screen({
+  Description_Screen({
     super.key,
     this.name,
     this.price,
@@ -15,6 +15,10 @@ class Description_Screen extends StatelessWidget {
     this.in_favorite,
     this.productId,
     this.image,
+    this.oldPrice,
+    this.discount,
+    this.result,
+    this.in_cart,
   });
   final name;
   final price;
@@ -22,11 +26,16 @@ class Description_Screen extends StatelessWidget {
   final in_favorite;
   final productId;
   final image;
+  final oldPrice;
+  final discount;
+  final result;
+  final in_cart;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopLoginCubit, ShopLoginStates>(
         builder: (context, state) {
           ShopLoginCubit cubit = ShopLoginCubit.get(context);
+          // cubit.in_cart = in_cart;
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -60,32 +69,77 @@ class Description_Screen extends StatelessWidget {
                 ),
               ),
             ),
-            body: buildProduct(),
+            body: buildProduct(context),
+            bottomSheet: Container(
+              height: 100.0,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade400.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    '${price} EGP',
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Container(
+                    height: 50.0,
+                    width: 140.0,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: in_cart == true
+                        ? MaterialButton(
+                            onPressed: () {
+                              cubit.postCart(productId: productId);
+                              cubit.changeCartBool();
+                            },
+                            child: const Text(
+                              'Remove',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        : MaterialButton(
+                            onPressed: () {
+                              cubit.postCart(productId: productId);
+                              cubit.changeCartBool();
+                            },
+                            child: const Text(
+                              'Add To Cart',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                  ),
+                ],
+              ),
+            ),
           );
         },
         listener: (context, state) {});
   }
 
-  Widget buildProduct() => Padding(
+  Widget buildProduct(context) => Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: double.infinity,
-                height: 300.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    14.0,
+                  width: double.infinity,
+                  height: 300.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      14.0,
+                    ),
                   ),
-                ),
-                child: Image(
-                  image: NetworkImage(
-                    '${image}',
-                  ),
-                ),
-              ),
+                  child: Image.network('${image}')),
               Text(
                 "${name}",
                 style: const TextStyle(
@@ -97,30 +151,57 @@ class Description_Screen extends StatelessWidget {
               const SizedBox(
                 height: 15.0,
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.red, borderRadius: BorderRadius.circular(3)),
-                child: const Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Text(
-                    'Save 20%',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
+              discount != 0
+                  ? Container(
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(3)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          'Save ${result.round().abs()}\%',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
               const SizedBox(
                 height: 20.0,
               ),
-              const Text(
-                'Information',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
-                ),
+              Row(
+                children: [
+                  const Text(
+                    'Information',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const Spacer(),
+                  // if (ShopLoginCubit.get(context).currentIndexCart == 0)
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: ShopLoginCubit.get(context).currentIndexCart != 1
+                        ? () {
+                            ShopLoginCubit.get(context)
+                                .changeCurrentIndexRemove(price);
+                          }
+                        : null,
+                    icon: const Icon(Icons.remove_circle),
+                  ),
+                  Text('${ShopLoginCubit.get(context).currentIndexCart}'),
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      ShopLoginCubit.get(context).changeCurrentIndexAdd(price);
+                    },
+                    icon: const Icon(Icons.add_circle),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 20.0,
@@ -131,6 +212,9 @@ class Description_Screen extends StatelessWidget {
                   color: Colors.grey.shade600,
                   fontSize: 14.0,
                 ),
+              ),
+              const SizedBox(
+                height: 100.0,
               ),
             ],
           ),

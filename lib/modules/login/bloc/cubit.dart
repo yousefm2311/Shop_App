@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onboarding_screen/models/cart_model.dart';
 import 'package:onboarding_screen/models/changepassword_model.dart';
 import 'package:onboarding_screen/models/favorite_model.dart';
 import 'package:onboarding_screen/models/search_model.dart';
@@ -19,11 +20,29 @@ import 'package:onboarding_screen/shared/network/endpoint.dart';
 import 'package:onboarding_screen/shared/network/remote/dio.dart';
 
 import '../../../models/favorite_data_model.dart';
+import '../../../models/get_data_cart_model.dart';
 
 class ShopLoginCubit extends Cubit<ShopLoginStates> {
   ShopLoginCubit() : super(ShopAppintializationStates());
 
   static ShopLoginCubit get(context) => BlocProvider.of(context);
+  int currentIndexCart = 1;
+
+  void changeCurrentIndexAdd(result) {
+    currentIndexCart++;
+    emit(ChangeCurrenIndexAdd());
+  }
+
+  void changeCurrentIndexRemove(result) {
+    currentIndexCart--;
+    emit(ChangeCurrenIndexRemove());
+  }
+
+  bool in_cart = false;
+  void changeCartBool() {
+    in_cart = !in_cart;
+    emit(ChangeCartBoolState());
+  }
 
   bool isDark = false;
   void darkTheme() {
@@ -68,6 +87,7 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
   }
 
   Map<int, bool> favoriteMap = {};
+  Map<int, bool> in_Cart = {};
   Home_Model? home_model;
   void homeData() {
     emit(ShopGetDataHomeLoadingState());
@@ -76,6 +96,10 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
       home_model!.data!.products.forEach((element) {
         favoriteMap.addAll({element.id!: element.in_favorites!});
       });
+      home_model!.data!.products.forEach((element) {
+        in_Cart.addAll({element.id!: element.in_cart!});
+      });
+      print(in_Cart);
       emit(ShopGetDataHomeSuccessState());
     }).catchError((error) {
       emit(ShopGetDataHomeErrorState(error.toString()));
@@ -162,8 +186,6 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
     });
   }
 
-
-
   ChangePasswordModel? changePasswordModel;
   void changePasswordData(
       {required String oldPassword, required String newPassword}) {
@@ -194,6 +216,32 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
       emit(ShopSearchSuccessSate());
     }).catchError((error) {
       emit(ShopSearchErrorSate());
+    });
+  }
+
+  CartModlePost? cartModlePost;
+  void postCart({required int productId}) {
+    emit(ShopAddCartLoadingState());
+    Dio_Helper.postData(
+        url: CARTS,
+        token: token,
+        data: {'product_id': productId}).then((value) {
+      cartModlePost = CartModlePost.fromJson(value.data);
+      getDataCart();
+      emit(ShopAddCartSuccessState());
+    }).catchError((error) {
+      emit(ShopAddCartErrorState());
+    });
+  }
+
+  GetDataCartModel? getDataCartModel;
+  void getDataCart() {
+    emit(ShopGetDataLoadingCart());
+    Dio_Helper.getData(url: CARTS, token: token).then((value) {
+      getDataCartModel = GetDataCartModel.fromJson(value.data);
+      emit(ShopGetDataSuccessCart());
+    }).catchError((error) {
+      emit(ShopGetDataErrorCart());
     });
   }
 }

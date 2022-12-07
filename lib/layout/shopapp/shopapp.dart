@@ -4,8 +4,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:onboarding_screen/models/category_model.dart';
 import 'package:onboarding_screen/models/home_model.dart';
+import 'package:onboarding_screen/modules/cart/cart.dart';
 import 'package:onboarding_screen/modules/description_home/description.dart';
 import 'package:onboarding_screen/modules/login/bloc/cubit.dart';
 import 'package:onboarding_screen/modules/login/bloc/states.dart';
@@ -29,7 +31,35 @@ class ShopAppLayout extends StatelessWidget {
                 onPressed: () {
                   defaultNavigatorPush(context, Search_Screen());
                 },
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
+              ),
+              IconButton(
+                onPressed: () {
+                  defaultNavigatorPush(context, Cart_Screen());
+                },
+                icon: Stack(
+                  alignment: AlignmentDirectional.topStart,
+                  children: [
+                    const Icon(
+                      Icons.shopping_cart_rounded,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      width: 11,
+                      height: 11,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      child: const Text(
+                        '2',
+                        style: TextStyle(
+                          fontSize: 8,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -37,8 +67,10 @@ class ShopAppLayout extends StatelessWidget {
             builder: (context) => productBuilder(
                 cubit.home_model!, cubit.categoryModel!, context),
             condition: cubit.home_model != null && cubit.categoryModel != null,
-            fallback: (BuildContext context) =>
-                const Center(child: CircularProgressIndicator()),
+            fallback: (BuildContext context) => Center(
+                child: Lottie.asset(
+              'assets/images/4.json',
+            ),),
           ),
         );
       }),
@@ -67,12 +99,7 @@ class ShopAppLayout extends StatelessWidget {
               CarouselSlider(
                 items: model.data!.banners
                     .map(
-                      (e) => Image(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          '${e.image}',
-                        ),
-                      ),
+                      (e) => Image.network('${e.image}'),
                     )
                     .toList(),
                 options: CarouselOptions(
@@ -160,6 +187,11 @@ class ShopAppLayout extends StatelessWidget {
                 description: model.description,
                 in_favorite: model.in_favorites,
                 image: model.image,
+                oldPrice: model.old_price,
+                discount: model.discount,
+                in_cart: model.in_cart,
+                result: 
+                    ((((model.price - model.old_price) / model.price) * 100)),
               ),
             );
           },
