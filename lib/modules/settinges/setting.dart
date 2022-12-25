@@ -39,7 +39,7 @@ class Settings_Screen extends StatelessWidget {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        body: FadeInDown(
+        body: FadeInUp(
           delay: const Duration(milliseconds: 250),
           child: Padding(
             padding: const EdgeInsets.symmetric(

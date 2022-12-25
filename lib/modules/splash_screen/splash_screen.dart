@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:onboarding_screen/modules/onboarding/onboarding.dart';
 import 'package:onboarding_screen/shared/component/component.dart';
 
 import '../../shared/component/constants.dart';

@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 
+import 'package:animate_do/animate_do.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,33 +24,37 @@ class Cart_Screen extends StatelessWidget {
                 style: TextStyle(color: Colors.black),
               ),
             ),
-            body: ConditionalBuilder(
-                condition: cubit.getDataCartModel!.data!.cart_items.isNotEmpty,
-                builder: (context) {
-                  return ListView.separated(
-                      itemBuilder: (context, index) {
-                        return buildCart(
-                            cubit.getDataCartModel!.data!.cart_items[index],
-                            context);
-                      },
-                      separatorBuilder: (context, index) => const SizedBox(),
-                      itemCount:
-                          cubit.getDataCartModel!.data!.cart_items.length);
-                },
-                fallback: (context) => Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Lottie.asset('assets/images/2.json',
-                              width: 220.0, height: 220.0),
-                          const Text(
-                            "Cart is Empty",
-                            style: TextStyle(
-                                color: Colors.black54, fontSize: 22.0),
-                          ),
-                        ],
-                      ),
-                    )),
+            body: FadeInRightBig(
+              delay: const Duration(milliseconds: 100),
+              child: ConditionalBuilder(
+                  condition:
+                      cubit.getDataCartModel!.data!.cart_items.isNotEmpty,
+                  builder: (context) {
+                    return ListView.separated(
+                        itemBuilder: (context, index) {
+                          return buildCart(
+                              cubit.getDataCartModel!.data!.cart_items[index],
+                              context);
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(),
+                        itemCount:
+                            cubit.getDataCartModel!.data!.cart_items.length);
+                  },
+                  fallback: (context) => Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset('assets/images/2.json',
+                                width: 220.0, height: 220.0),
+                            const Text(
+                              "Cart is Empty",
+                              style: TextStyle(
+                                  color: Colors.black54, fontSize: 22.0),
+                            ),
+                          ],
+                        ),
+                      )),
+            ),
           );
         },
         listener: (context, state) {});

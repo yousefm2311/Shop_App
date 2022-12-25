@@ -99,7 +99,6 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
       home_model!.data!.products.forEach((element) {
         in_Cart.addAll({element.id!: element.in_cart!});
       });
-      print(in_Cart);
       emit(ShopGetDataHomeSuccessState());
     }).catchError((error) {
       emit(ShopGetDataHomeErrorState(error.toString()));

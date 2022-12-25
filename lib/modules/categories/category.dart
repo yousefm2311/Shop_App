@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_screen/models/category_model.dart';
@@ -30,24 +31,27 @@ class Categories_Screen extends StatelessWidget {
 
   Widget buildCategories(CategoryDataList categoryDataList) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: Row(
-          children: [
-            Image(
-              width: 120,
-              height: 120,
-              image: NetworkImage('${categoryDataList.image}'),
-            ),
-            const SizedBox(
-              width: 10.0,
-            ),
-            Text(
-              "${categoryDataList.name}",
-              style: const TextStyle(fontSize: 20.0, color: Colors.black),
-            ),
-            const Spacer(),
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios))
-          ],
+        child: FadeInDown(
+          delay: const Duration(milliseconds: 200),
+          child: Row(
+            children: [
+              Image(
+                width: 120,
+                height: 120,
+                image: NetworkImage('${categoryDataList.image}'),
+              ),
+              const SizedBox(
+                width: 10.0,
+              ),
+              Text(
+                "${categoryDataList.name}",
+                style: const TextStyle(fontSize: 20.0, color: Colors.black),
+              ),
+              const Spacer(),
+              IconButton(
+                  onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios))
+            ],
+          ),
         ),
       );
 }

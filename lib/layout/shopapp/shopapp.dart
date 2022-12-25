@@ -35,7 +35,7 @@ class ShopAppLayout extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  defaultNavigatorPush(context, Cart_Screen());
+                  defaultNavigatorPush(context, const Cart_Screen());
                 },
                 icon: Stack(
                   alignment: AlignmentDirectional.topStart,
@@ -45,16 +45,16 @@ class ShopAppLayout extends StatelessWidget {
                     ),
                     Container(
                       alignment: Alignment.center,
-                      width: 11,
-                      height: 11,
+                      width: 15,
+                      height: 15,
                       decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(25.0),
                       ),
-                      child: const Text(
-                        '2',
-                        style: TextStyle(
-                          fontSize: 8,
+                      child: Text(
+                        "${cubit.getDataCartModel!.data!.cart_items.length}",
+                        style: const TextStyle(
+                          fontSize: 9,
                         ),
                       ),
                     ),
@@ -68,9 +68,10 @@ class ShopAppLayout extends StatelessWidget {
                 cubit.home_model!, cubit.categoryModel!, context),
             condition: cubit.home_model != null && cubit.categoryModel != null,
             fallback: (BuildContext context) => Center(
-                child: Lottie.asset(
-              'assets/images/4.json',
-            ),),
+              child: Lottie.asset(
+                'assets/images/4.json',
+              ),
+            ),
           ),
         );
       }),
@@ -190,7 +191,7 @@ class ShopAppLayout extends StatelessWidget {
                 oldPrice: model.old_price,
                 discount: model.discount,
                 in_cart: model.in_cart,
-                result: 
+                result:
                     ((((model.price - model.old_price) / model.price) * 100)),
               ),
             );

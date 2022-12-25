@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, unnecessary_brace_in_string_interps, unused_local_variable, must_be_immutable, prefer_typing_uninitialized_variables, non_constant_identifier_names
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_screen/modules/login/bloc/cubit.dart';
@@ -93,29 +94,17 @@ class Description_Screen extends StatelessWidget {
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: in_cart == true
-                        ? MaterialButton(
-                            onPressed: () {
-                              cubit.postCart(productId: productId);
-                              cubit.changeCartBool();
-                            },
-                            child: const Text(
-                              'Remove',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          )
-                        : MaterialButton(
-                            onPressed: () {
-                              cubit.postCart(productId: productId);
-                              cubit.changeCartBool();
-                            },
-                            child: const Text(
-                              'Add To Cart',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                    child: MaterialButton(
+                      onPressed: () {
+                        cubit.postCart(productId: productId);
+                        cubit.changeCartBool();
+                      },
+                      child: const Text(
+                        'Add To Cart',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -128,95 +117,100 @@ class Description_Screen extends StatelessWidget {
   Widget buildProduct(context) => Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  width: double.infinity,
-                  height: 300.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      14.0,
+          child: FadeInDown(
+            delay: const Duration(milliseconds: 200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    width: double.infinity,
+                    height: 300.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        14.0,
+                      ),
                     ),
+                    child: Image.network('${image}')),
+                Text(
+                  "${name}",
+                  style: const TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
                   ),
-                  child: Image.network('${image}')),
-              Text(
-                "${name}",
-                style: const TextStyle(
-                  fontSize: 25.0,
-                  color: Colors.black,
+                  maxLines: 2,
                 ),
-                maxLines: 2,
-              ),
-              const SizedBox(
-                height: 15.0,
-              ),
-              discount != 0
-                  ? Container(
-                      decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(3)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          'Save ${result.round().abs()}\%',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                const SizedBox(
+                  height: 15.0,
+                ),
+                discount != 0
+                    ? Container(
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(3)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            'Save ${result.round().abs()}\%',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  : Container(),
-              const SizedBox(
-                height: 20.0,
-              ),
-              Row(
-                children: [
-                  const Text(
-                    'Information',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const Spacer(),
-                  // if (ShopLoginCubit.get(context).currentIndexCart == 0)
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: ShopLoginCubit.get(context).currentIndexCart != 1
-                        ? () {
-                            ShopLoginCubit.get(context)
-                                .changeCurrentIndexRemove(price);
-                          }
-                        : null,
-                    icon: const Icon(Icons.remove_circle),
-                  ),
-                  Text('${ShopLoginCubit.get(context).currentIndexCart}'),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      ShopLoginCubit.get(context).changeCurrentIndexAdd(price);
-                    },
-                    icon: const Icon(Icons.add_circle),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              Text(
-                '${description}',
-                style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontSize: 14.0,
+                      )
+                    : Container(),
+                const SizedBox(
+                  height: 20.0,
                 ),
-              ),
-              const SizedBox(
-                height: 100.0,
-              ),
-            ],
+                Row(
+                  children: [
+                    const Text(
+                      'Information',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const Spacer(),
+                    // if (ShopLoginCubit.get(context).currentIndexCart == 0)
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed:
+                          ShopLoginCubit.get(context).currentIndexCart != 1
+                              ? () {
+                                  ShopLoginCubit.get(context)
+                                      .changeCurrentIndexRemove(price);
+                                }
+                              : null,
+                      icon: const Icon(Icons.remove_circle),
+                    ),
+                    Text('${ShopLoginCubit.get(context).currentIndexCart}'),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        ShopLoginCubit.get(context)
+                            .changeCurrentIndexAdd(price);
+                      },
+                      icon: const Icon(Icons.add_circle),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Text(
+                  '${description}',
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                    fontSize: 14.0,
+                  ),
+                ),
+                const SizedBox(
+                  height: 100.0,
+                ),
+              ],
+            ),
           ),
         ),
       );

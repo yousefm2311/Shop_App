@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, unnecessary_string_interpolations
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:onboarding_screen/modules/login/login.dart';
 import 'package:onboarding_screen/shared/component/component.dart';
@@ -57,70 +58,73 @@ class _OnBoarding_ScreenState extends State<OnBoarding_Screen> {
                 child: const Text('SKIP'))
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            children: [
-              SmoothPageIndicator(
-                controller: onboardingController,
-                count: onboarding.length,
-                effect: const ExpandingDotsEffect(
-                  activeDotColor: Colors.deepOrange,
-                  dotHeight: 10,
-                  dotWidth: 10,
-                  dotColor: Colors.grey,
-                ),
-              ),
-              Expanded(
-                child: PageView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  onPageChanged: (int index) {
-                    if (index == onboarding.length - 1) {
-                      setState(() {
-                        isLast = true;
-                      });
-                    } else {
-                      setState(() {
-                        isLast = false;
-                      });
-                    }
-                  },
+        body: FadeInUpBig(
+          delay: const Duration(milliseconds: 200),
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              children: [
+                SmoothPageIndicator(
                   controller: onboardingController,
-                  itemBuilder: (context, index) =>
-                      defaultOnBoarding(onboarding[index]),
-                  itemCount: onboarding.length,
-                ),
-              ),
-              Container(
-                width: isLast ? 150 : 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.grey[800],
-                ),
-                child: MaterialButton(
-                  height: 50,
-                  onPressed: () {
-                    if (isLast) {
-                      submit();
-                    } else {
-                      onboardingController.nextPage(
-                        duration: const Duration(
-                          milliseconds: 750,
-                        ),
-                        curve: Curves.fastLinearToSlowEaseIn,
-                      );
-                    }
-                  },
-                  child: Text(
-                    isLast ? 'Next' : '$skip',
-                    style: const TextStyle(fontSize: 18.0, color: Colors.white),
+                  count: onboarding.length,
+                  effect: const ExpandingDotsEffect(
+                    activeDotColor: Colors.deepOrange,
+                    dotHeight: 10,
+                    dotWidth: 10,
+                    dotColor: Colors.grey,
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 50.0,
-              ),
-            ],
+                Expanded(
+                  child: PageView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    onPageChanged: (int index) {
+                      if (index == onboarding.length - 1) {
+                        setState(() {
+                          isLast = true;
+                        });
+                      } else {
+                        setState(() {
+                          isLast = false;
+                        });
+                      }
+                    },
+                    controller: onboardingController,
+                    itemBuilder: (context, index) =>
+                        defaultOnBoarding(onboarding[index]),
+                    itemCount: onboarding.length,
+                  ),
+                ),
+                Container(
+                  width: isLast ? 150 : 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Colors.grey[800],
+                  ),
+                  child: MaterialButton(
+                    height: 50,
+                    onPressed: () {
+                      if (isLast) {
+                        submit();
+                      } else {
+                        onboardingController.nextPage(
+                          duration: const Duration(
+                            milliseconds: 750,
+                          ),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                        );
+                      }
+                    },
+                    child: Text(
+                      isLast ? 'Next' : '$skip',
+                      style: const TextStyle(fontSize: 18.0, color: Colors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 50.0,
+                ),
+              ],
+            ),
           ),
         ));
   }

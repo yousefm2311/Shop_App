@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, prefer_is_empty
 
+import 'package:animate_do/animate_do.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,33 +20,37 @@ class Favorite_Screen extends StatelessWidget {
         ShopLoginCubit cubit = ShopLoginCubit.get(context);
         return Scaffold(
           appBar: AppBar(),
-          body: ConditionalBuilder(
-              condition: state is! ShopGetLoadingFavoriteSuccessState,
-              builder: (context) => cubit.favoriteModel!.data!.data.length != 0
-                  ? ListView.separated(
-                      itemBuilder: (context, index) => buildGridView(
-                          cubit.favoriteModel!.data!.data[index], context),
-                      separatorBuilder: (context, index) => const SizedBox(
-                            height: 10.0,
-                          ),
-                      itemCount: cubit.favoriteModel!.data!.data.length)
-                  : Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        // ignore: prefer_const_literals_to_create_immutables
-                        children: [
-                          const Text('💔', style: TextStyle(fontSize: 40.0)),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          const Text("Not Favorite",
-                              style: TextStyle(fontSize: 22.0)),
-                        ],
+          body: FadeInUp(
+            delay: const Duration(milliseconds: 200),
+            child: ConditionalBuilder(
+                condition: state is! ShopGetLoadingFavoriteSuccessState,
+                builder: (context) => cubit.favoriteModel!.data!.data.length !=
+                        0
+                    ? ListView.separated(
+                        itemBuilder: (context, index) => buildGridView(
+                            cubit.favoriteModel!.data!.data[index], context),
+                        separatorBuilder: (context, index) => const SizedBox(
+                              height: 10.0,
+                            ),
+                        itemCount: cubit.favoriteModel!.data!.data.length)
+                    : Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            const Text('💔', style: TextStyle(fontSize: 40.0)),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            const Text("Not Favorite",
+                                style: TextStyle(fontSize: 22.0)),
+                          ],
+                        ),
                       ),
-                    ),
-              fallback: (context) => const Center(
-                    child: CircularProgressIndicator(),
-                  )),
+                fallback: (context) => const Center(
+                      child: CircularProgressIndicator(),
+                    )),
+          ),
         );
       }),
       listener: ((context, state) {}),
